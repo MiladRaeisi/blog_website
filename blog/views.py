@@ -1,5 +1,5 @@
 from blog.models import Post
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.shortcuts import get_object_or_404
 from .forms import NewPostForm
 
@@ -21,7 +21,7 @@ def post_create_view(request):
         form = NewPostForm(request.POST)
         if form.is_valid():
             form.save()
-            form = NewPostForm()
+            return redirect('posts_list')
     else:
         form = NewPostForm()
     return render(request, 'blog/post_create.html', context={'form': form})
